@@ -1,5 +1,3 @@
-from functools import cache
-from typing import Text
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask.globals import request, session
@@ -7,7 +5,6 @@ from flask.helpers import make_response
 from datetime import date, datetime
 from flask import jsonify
 from flask_marshmallow import Marshmallow
-from numpy import NaN
 from sqlalchemy.sql.elements import Null, True_
 from sqlalchemy.sql.operators import exists
 
@@ -16,7 +13,7 @@ from sqlalchemy.sql.operators import exists
 #
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://uokeajdcydtssj:44d7bff5aa1e16353f111036c84d175dfd79f50d3f4ddeb0d3a15e0e3c0b58c0@ec2-34-255-32-3.eu-west-1.compute.amazonaws.com:5432/d9l64dvlj09dhh'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://{host_name}'
 
 #
 #           DataBase
