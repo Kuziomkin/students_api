@@ -2,12 +2,15 @@ openapi: 3.0.1
 info:
   title: Lab2021
   description: |-
-    <h3>The service allows keeping students academic performance records for BA Internship Lab.</h3>
+    <h3>The service allows keeping students academic performance records.</h3>
   contact:
     name: Dzianis Kuziomkin
-    email: dzianis_kuziomkin@epam.com
-  version: 1.0.1
+    email: kuziomkin@gmail.com
+  version: 1.0.3
 servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/Kuziomkin/Academic_performace_tracking/1.0.3
   - description: base url
     url: https://lab2021.herokuapp.com
 paths:
@@ -165,6 +168,7 @@ paths:
           schema:
             type: integer
             format: int64
+          example: 2
       responses:
         '200':
           description: "Successful operation"
@@ -442,3 +446,4 @@ components:
           example: 9
       required:
         - id
+
