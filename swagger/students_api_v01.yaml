@@ -1,0 +1,444 @@
+openapi: 3.0.1
+info:
+  title: Lab2021
+  description: |-
+    <h3>The service allows keeping students academic performance records for BA Internship Lab.</h3>
+  contact:
+    name: Dzianis Kuziomkin
+    email: dzianis_kuziomkin@epam.com
+  version: 1.0.1
+servers:
+  - description: base url
+    url: https://lab2021.herokuapp.com
+paths:
+  /student/add:
+    post:
+      tags:
+      - 'student'
+      summary: 'Add student to the system'
+      description: 'Add student'
+      operationId: 'add_student'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StudentAddDto'
+      responses:
+        '200':
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentResponseDto'
+        '400':
+          description: "Bad request"
+        '409':
+          description: 'Conflict'
+        '500':
+          description: 'Internal server error'
+  /student/{id}:
+    get:
+      tags:
+      - 'student'
+      summary: 'Get students data'
+      description: 
+        This resource represents an individual student in the system.
+        Each student is identified by a numeric `id`. 
+      operationId: 'student_id'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            example: 1
+            format: int64
+      responses:
+        '200':
+          description: "Successful operation"
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/StudentResponseDto'
+        '400':
+          description: '404 Not Found'            
+  /student/all:
+    get:
+      tags:
+      - 'student'
+      summary: 'Get students list'
+      description: 'Return all students in array'
+      operationId: 'student_all'
+      responses:
+        '200':
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/StudentResponseDto' 
+  /student/update:
+    put:
+      tags:
+      - 'student'
+      summary: 'Update student'
+      description: 'Alter students records'
+      operationId: 'student_update'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StudentUpdateDto'
+      responses:
+        '200':
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentResponseDto'
+        '400':
+          description: "Bad request"
+        '409':
+          description: 'Conflict'
+        '500':
+          description: 'Internal server error'
+  /student/delete/{id}:
+    delete:
+      tags:
+      - 'student'
+      summary: 'Delete student data'
+      description: 'Delete student data'
+      operationId: 'student_delete'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+            format: int64
+      responses:
+        '200':
+          description: "Successful operation"
+  /subject/all:
+    get:
+      tags:
+      - 'subject'
+      summary: 'Get subject list'
+      description: 'Get all subjects'
+      operationId: 'subject_all'
+      responses:
+        '200':
+          description: "Successful operation"
+  /mark/add:
+    post:
+      tags:
+      - 'mark'
+      summary: 'Add mark to the system'
+      description: 'Add mark'
+      operationId: 'add_mark'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MarkAddDto'
+      responses:
+        '200':
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MarkResponseDto'
+  /mark/{id}:
+    get:
+      tags:
+      - 'mark'
+      summary: 'Get specific marks'
+      description:  This resource represents an individual mark in the system.
+        Each mark is identified by a numeric `id`.
+      operationId: 'mark_id'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MarkResponseDto'
+  /mark/all:
+    get:
+      tags:
+      - 'mark'
+      summary: 'Get marks list'
+      description: 'Return all marks in array'
+      operationId: 'marks_all'
+      responses:
+        '200':
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/MarkResponseDto' 
+  /mark/student/{student_id}:
+    get:
+      tags:
+      - 'mark'
+      summary: 'Get specific students marks'
+      description:  This resource represents an individual students mark in the system.
+        Each mark is identified by a numeric `id`.
+      operationId: 'marks_students_id'
+      parameters:
+        - in: path
+          name: student_id
+          required: true
+          schema:
+            type: integer
+            format: int64
+          example: 2
+      responses:
+        '200':
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MarkResponseDto'
+  /mark/update:
+    put:
+      tags:
+      - 'mark'
+      summary: 'Update mark'
+      description: 'Alter marks records'
+      operationId: 'mark_update'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MarkUpdateDto'
+      responses:
+        '200':
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MarkResponseDto'
+        '400':
+          description: "Bad request"
+        '409':
+          description: 'Conflict'
+        '500':
+          description: 'Internal server error'
+  /mark/delete/{id}:
+    delete:
+      tags:
+      - 'mark'
+      summary: 'Delete mark data'
+      description: 'Delete mark data'
+      operationId: 'mark_delete'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+            format: int64
+      responses:
+        '200':
+          description: "Successful operation"
+components:
+  schemas:
+    StudentAddDto:
+      type: object
+      additionalProperties: false
+      properties:
+        first_name:
+          description: 'Students name'
+          type: string
+          minLength: 1
+          maxLength: 255
+          example: 'Mary'
+        last_name:
+          description: 'Students suname'
+          type: string
+          minLength: 1
+          maxLength: 255
+          example: 'Leotova'
+        birth_date:
+          description: 'Students birth date'
+          type: string
+          minLength: 10
+          maxLength: 30
+          format: date-time
+          example: '1992-02-12'
+      required:
+      - first_name
+      - last_name
+      - birth_date
+    StudentResponseDto:
+      type: object
+      additionalProperties: false
+      properties:
+        first_name:
+          description: 'Students name'
+          type: string
+          minLength: 1
+          maxLength: 255
+          example: 'Mary'
+        last_name:
+          description: 'Students suname'
+          type: string
+          minLength: 1
+          maxLength: 255
+          example: 'Leotova'
+        birth_date:
+          description: 'Students birth date'
+          type: string
+          minLength: 10
+          maxLength: 30
+          format: date-time
+          example: '1992-02-12'
+        date: 
+          description: 'Records date'
+          type: string
+          minLength: 10
+          maxLength: 30
+          format: date-time
+          example: '2022-02-19T16:54:48.078896'
+        id: 
+          description: 'Students identifier'
+          type: integer
+          format: int64
+          example: 1
+      required:
+        - first_name
+        - last_name
+        - birth_date
+        - date
+        - id
+    StudentUpdateDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id: 
+          description: 'Students identifier'
+          type: integer
+          format: int64
+          example: 1
+        first_name:
+          description: 'Students name'
+          type: string
+          minLength: 1
+          maxLength: 255
+          example: 'Mary'
+        last_name:
+          description: 'Students suname'
+          type: string
+          minLength: 1
+          maxLength: 255
+          example: 'Leotova'
+        birth_date:
+          description: 'Students birth date'
+          type: string
+          minLength: 10
+          maxLength: 30
+          format: date-time
+          example: '1992-02-12'
+      required:
+        - id
+    MarkAddDto:
+      type: object
+      additionalProperties: false
+      properties:
+        student_id:
+          description: 'Students identifier'
+          type: integer
+          format: int64
+          example: 1
+        subject_id:
+          description: 'Subjects identifier'
+          type: integer
+          format: int64
+          example: 5
+        mark: 
+          description: 'Assessment score'
+          type: integer
+          format: int64
+          example: 9
+      required:
+        - student_id
+        - subject_id
+        - mark
+    MarkResponseDto:
+      type: object
+      additionalProperties: false
+      properties:
+        date: 
+          description: 'Records date'
+          type: string
+          minLength: 10
+          maxLength: 30
+          format: date-time
+          example: '2022-02-19T16:54:48.078896'
+        id:
+          description: 'Marks identifier'
+          type: integer
+          format: int64 
+          example: 2         
+        student_id:
+          description: 'Students identifier'
+          type: integer
+          format: int64
+          example: 1
+        subject_id:
+          description: 'Subjects identifier'
+          type: integer
+          format: int64
+          example: 5
+        mark: 
+          description: 'Assessment score'
+          type: integer
+          format: int64
+          example: 9
+      required:
+        - id 
+        - date
+        - student_id
+        - subject_id
+        - mark
+    MarkUpdateDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          description: 'Marks identifier'
+          type: integer
+          format: int64  
+          example: 1        
+        student_id:
+          description: 'Students identifier'
+          type: integer
+          format: int64
+          example: 1
+        subject_id:
+          description: 'Subjects identifier'
+          type: integer
+          format: int64
+          example: 5
+        mark: 
+          description: 'Assessment score'
+          type: integer
+          format: int64
+          example: 9
+      required:
+        - id
